@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curies Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- alert js -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main id="first-page" class="main-content container">
+
+        <div class="booking-content">
+            <h1>Cruise Queen</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                scrambled it to make a type specimen book./p>
+        </div>
+
+
+        <div class="booking-form">
+            <h3>Book Ocean Time</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                        <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+
+            <!-- ---------------------------first class economy class part and plus minus buttons--------------------------------- -->
+            <!-- first-class -->
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="first-class-sum" class="inp-style inp-width form-control" type="text" placeholder=""
+                        value="0">
+                </div>
+                <div>
+                    <button onclick="ticketsHandleChange('first-class', true)" class="  plus-minus-btn">+</button>
+                    <button onclick="ticketsHandleChange('first-class', false)" class=" plus-minus-btn">-</button>
+                </div>
+            </div>
+
+            <!-- economy-class -->
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input id="economy-sum" class="inp-style inp-width form-control" type="text" placeholder=""
+                        value="0">
+                </div>
+                <div>
+                    <button onclick="ticketsHandleChange('economy', true)" class="plus-minus-btn">+</button>
+                    <button onclick="ticketsHandleChange('economy', false)" class="plus-minus-btn">-</button>
+                </div>
+            </div>
+            <!-- ---------------end part first economy class---- -->
+
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="sub-total">$000</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="vat">$000</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="final-total">$000</p>
+                    </div>
+                </div>
+            </div>
+            <button  class="btn-style"onclick="popUp()">Book Now</button>
+        </div>
+    </main>
+
+  
+
+    <script>
+        function ticketsHandleChange(tickets, increased)
+         {
+            const ticketsInput = document.getElementById(tickets + '-sum');
+            const ticketsSum = parseInt(ticketsInput.value);
+
+            let ticketsNewSum = ticketsSum;
+            if (increased == true) ticketsNewSum++;
+            else if (increased == false && ticketsNewSum > 0) ticketsNewSum--;
+            ticketsInput.value = ticketsNewSum;
+
+            calculateTotal();
+        }
+                //    function of calculate all total value
+
+        function calculateTotal()
+         {
+            const firstClassSum = getInputValue('first-class');
+            const economySum = getInputValue('economy');
+
+            const ticketsTotalPrice = firstClassSum * 150 + economySum * 100;
+            const vat = ticketsTotalPrice / 10;
+            document.getElementById('vat').innerText = '$'+ vat;
+            document.getElementById('sub-total').innerText = '$'+ ticketsTotalPrice
+             const finalTotal = ticketsTotalPrice + vat;
+            document.getElementById('final-total').innerText = '$'+ finalTotal;
+
+           
+        }
+                // function of taking value using plus minus button
+
+        function getInputValue(tickets) {
+            const ticketsInput = document.getElementById(tickets + '-sum').value;
+            const ticketsSum = parseInt(ticketsInput);
+            return ticketsSum;
+        }
+
+//      function of popUp alert for ticket confirming
+
+        function popUp()
+         {
+            if ((getInputValue('first-class') == 0) && (getInputValue('economy') == 0))  {
+                swal("Please", "Enter your ticket Quantity","error");
+            }
+            else {
+                swal("Ticket Booked done!", "Nice Journey!", "success");
+            }
+        }
+    
+
+    </script>
+</body>
+
+</html>
